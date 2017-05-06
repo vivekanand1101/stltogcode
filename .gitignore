@@ -1,0 +1,6 @@
+dist/*
+output/*
+*.egg-info/*
+uploads/*
+
+*.pyc

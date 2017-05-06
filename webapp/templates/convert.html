@@ -1,0 +1,30 @@
+<a href="{{url_for('uploaded_file', uid=uid)}}">Original File</a>
+<a href="{{url_for('home')}}"> Home </a>
+<p id="down">Download link will appear after this: </p>
+
+<script type="text/javascript">
+var source = null;
+var sse = true;
+if (!!window.EventSource) {
+  source = new EventSource('{{ config["EVENTSOURCE_SOURCE"]}}' + "{{uid}}");
+  source.addEventListener('error', function(e) {
+    sse = false;
+  }, false);
+}
+
+window.onbeforeunload = function() {
+  source.close()
+};
+
+source.addEventListener('message', function(e) {
+  console.log(e.data);
+  var data = JSON.parse(e.data);
+  var down_link = data['down_link'];
+  var a = document.createElement('a');
+  var link_text = document.createTextNode('Converted file');
+  a.appendChild(link_text);
+  a.title = down_link;
+  a.href = down_link;
+  document.body.appendChild(a);
+}, false)
+</script>
