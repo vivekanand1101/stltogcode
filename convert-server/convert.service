@@ -1,0 +1,9 @@
+[Unit]
+Decription=StltoGcode convert service
+
+[Service]
+ExecStart=/usr/bin/python3 /root/stltogcode/convert-server/convert.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=StltoGcode event source server
+
+[Service]
+ExecStart=/usr/bin/python3 /root/stltogcode/ev-server/event_server.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
