@@ -8,7 +8,6 @@ import sys
 import subprocess
 import urllib.parse as urlparse
 
-import requests
 import trollius
 import trollius_redis
 
