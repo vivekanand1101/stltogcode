@@ -36,8 +36,8 @@ def convert_file(uid):
     file_obj = webapp.lib.get_file(webapp.SESSION, uid=uid)
     filepath = _get_file_from_obj(file_obj)
     if not os.path.exists(filepath):
-        raise webapp.exceptions.WebappException(
-            'File not found while converting')
+        log.exception('File not found while converting')
+        return
 
     original_file = webapp.APP.config['UPLOAD_FOLDER'] \
         + '/' + uid + '-' + file_obj.secure_filename
