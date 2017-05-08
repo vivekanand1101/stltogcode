@@ -60,3 +60,4 @@ class Conversion(BASE):
     id = sa.Column(sa.Integer, primary_key=True)
     uid = sa.Column(sa.String(32), unique=True, nullable=False)
     secure_filename = sa.Column(sa.Text, nullable=False)
+    converted = sa.Column(sa.Boolean, default=False)

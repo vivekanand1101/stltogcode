@@ -10,6 +10,7 @@ import urllib.parse as urlparse
 
 import trollius
 import trollius_redis
+from sqlalchemy.exc import SQLAlchemyError
 
 log = logging.getLogger(__name__)
 
@@ -22,6 +23,7 @@ sys.path.insert(1, webapp_path)
 
 import webapp
 import webapp.lib
+from webapp import SESSION
 from webapp.exceptions import WebappEvException
 
 
@@ -58,6 +60,14 @@ def convert_file(uid):
         stderr=subprocess.PIPE,
         cwd=cura_engine_dir,
     )
+    file_obj.converted = True
+    SESSION.add(file_obj)
+    try:
+        SESSION.commit()
+    except SQLAlchemyError:
+        SESSION.rollback()
+        log.exception(
+            'Could not update database after file conversion %s' % uid)
     return webapp.APP.config['APP_URL'] + '/converted/' + uid
 
 

@@ -67,6 +67,11 @@ def convert_file(uid):
     if file_obj is None:
         return flask.redirect(flask.url_for('home'))
 
+    # conversion has been already done
+    if file_obj.converted is True:
+        return flask.redirect(flask.url_for('converted_file', uid=uid))
+
+    # conversion not done
     # Send the json to a different server for processing
     webapp.lib.send_to_redis(uid)
     return flask.render_template(
